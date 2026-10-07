@@ -82,7 +82,9 @@
 html, body {
   height: 100%;
   width: 100%;
-  overflow: hidden; /* No scroll on screen */
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Strict zero scroll */
   font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-page-mesh);
   background-attachment: fixed;
@@ -91,31 +93,34 @@ html, body {
 }
 
 body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: clamp(10px, 1.8vh, 18px) clamp(12px, 1.8vw, 22px);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
   position: relative;
+  overflow: hidden;
 }
 
-/* Subtle Top Corner Utility Bar */
+/* Fixed Top Corner Theme Toggle */
 .top-bar-minimal {
-  position: absolute;
+  position: fixed;
   top: 14px;
-  right: 20px;
+  right: 18px;
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 50;
+  z-index: 100;
 }
 
 .theme-toggle-btn {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -132,89 +137,62 @@ body {
 }
 
 .theme-toggle-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
 }
 
 /* ==========================================================================
-   3D PERSPECTIVE WRAPPER (Uiverse 3D UI effect)
+   FULL SCREEN CARD CONTAINER
    ========================================================================== */
 .parent {
   width: 100%;
-  max-width: 900px;
-  perspective: 1000px;
+  height: 100%;
+  max-width: 1380px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-/* ==========================================================================
-   MAIN CARD ELEMENT
-   ========================================================================== */
 .card-master-wrapper {
   width: 100%;
+  height: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card), 0 0 35px -8px rgba(0, 128, 255, 0.25);
   overflow: hidden;
   position: relative;
   display: flex;
-  transform-style: preserve-3d;
-  will-change: transform;
-  backface-visibility: hidden;
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 /* ==========================================================================
-   DESKTOP / LAPTOP: HORIZONTAL CARD LAYOUT WITH 3D HOVER ANIMATION
+   DESKTOP / LAPTOP: FULL SCREEN SPLIT CARD (HORIZONTAL, ZERO SCROLL)
    ========================================================================== */
 @media (min-width: 900px) {
   .card-master-wrapper {
-    max-width: 900px;
-    height: 520px; /* Exact fit, NO scroll */
     flex-direction: row;
+    width: 100%;
+    height: 100%;
   }
 
-  /* Uiverse 3D Hover Shadow & Layers Elevation */
-  .parent:hover .card {
-    box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.8),
-                0 0 50px -10px rgba(0, 128, 255, 0.35);
-  }
-
-  .parent:hover .card .dp-outer-wrapper {
-    transform: translate3d(0, 0, 45px);
-    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 210, 255, 0.5);
-  }
-
-  .parent:hover .card .save-vcard-btn {
-    transform: translate3d(0, 0, 40px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-  }
-
-  .parent:hover .card .social-circle-link {
-    transform: translate3d(0, 0, 35px);
-  }
-
-  .parent:hover .card .action-grid-card {
-    transform: translate3d(0, 0, 22px);
-  }
-
-  /* LEFT PANEL: Brand, Identity, DP, Actions */
+  /* LEFT PANEL: Executive Brand, Identity, DP, Actions */
   .card-left-panel {
-    width: 40%;
-    min-width: 340px;
+    width: 36%;
+    min-width: 360px;
+    max-width: 450px;
+    height: 100%;
     position: relative;
     background: var(--brand-gradient-alt);
     color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 24px 22px;
+    padding: clamp(24px, 3.5vh, 44px) clamp(24px, 2.8vw, 40px);
     z-index: 10;
     overflow: hidden;
-    transform-style: preserve-3d;
+    border-right: 1px solid var(--border-subtle);
   }
 
   .card-left-panel::after {
@@ -231,23 +209,23 @@ body {
     justify-content: space-between;
     position: relative;
     z-index: 10;
-    min-height: 42px;
+    min-height: 44px;
   }
 
   .brand-title-box {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
 
   .company-mark-logo {
-    height: 32px;
+    height: 36px;
     width: auto;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
   }
 
   .brand-main-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 800;
     letter-spacing: -0.3px;
     color: #ffffff;
@@ -261,45 +239,49 @@ body {
   .official-chip {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.22);
     color: #ffffff;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 600;
-    padding: 3px 9px;
+    padding: 4px 10px;
     border-radius: var(--radius-pill);
     letter-spacing: 0.2px;
   }
 
   .official-chip svg {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
   }
 
   /* Fully Visible DP & Profile */
   .left-profile-block {
     position: relative;
     z-index: 2;
-    margin: 12px 0 8px;
+    margin: 16px 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    transform-style: preserve-3d;
+    gap: 16px;
   }
 
   .dp-outer-wrapper {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: clamp(110px, 14vh, 136px);
+    height: clamp(110px, 14vh, 136px);
     border-radius: 50%;
-    padding: 3.5px;
+    padding: 4px;
     background: linear-gradient(135deg, #00d2ff 0%, #0080ff 50%, #ffffff 100%);
     box-shadow: var(--shadow-dp);
     flex-shrink: 0;
-    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .dp-outer-wrapper:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 30px rgba(0, 210, 255, 0.45);
   }
 
   .dp-avatar-img {
@@ -307,73 +289,71 @@ body {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 20%; /* Face perfectly centered */
+    object-position: center 20%; /* Face centered */
     display: block;
     background: #070b16;
   }
 
   .dp-status-dot {
     position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 16px;
-    height: 16px;
+    bottom: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
     background: #10b981;
-    border: 2.5px solid #004c99;
+    border: 3px solid #004c99;
     border-radius: 50%;
   }
 
   .left-identity-info {
     width: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
   }
 
   .employee-name {
-    font-size: 24px;
+    font-size: clamp(26px, 2.5vw, 34px);
     font-weight: 800;
     line-height: 1.15;
-    letter-spacing: -0.4px;
+    letter-spacing: -0.5px;
     color: #ffffff;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .employee-role {
-    font-size: 13.5px;
+    font-size: clamp(14px, 1.3vw, 16.5px);
     font-weight: 600;
     color: var(--text-blue);
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
 
   .employee-company {
-    font-size: 12px;
+    font-size: clamp(12.5px, 1.1vw, 14px);
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.82);
   }
 
   .left-meta-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 7px;
+    margin-top: 12px;
   }
 
   .meta-tag {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 600;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     color: #ffffff;
-    padding: 2.5px 8px;
+    padding: 3px 10px;
     border-radius: var(--radius-pill);
   }
 
   .meta-tag svg {
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
   }
 
   /* Left Footer Action Buttons */
@@ -382,10 +362,8 @@ body {
     z-index: 2;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 6px;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
+    gap: 10px;
+    margin-top: 8px;
   }
 
   .save-vcard-btn {
@@ -393,33 +371,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 8px;
     background: #ffffff;
     color: #070b16;
     border: none;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    padding: 10px 14px;
+    padding: 12px 20px;
     border-radius: var(--radius-pill);
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     transition: all var(--transition);
   }
 
   .save-vcard-btn:hover {
     background: #f1f5f9;
-    transform: translateY(-1px) scale(1.02);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   }
 
   .save-vcard-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
   }
 
   .qr-trigger-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.25);
@@ -433,35 +412,37 @@ body {
 
   .qr-trigger-btn:hover {
     background: rgba(255, 255, 255, 0.28);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   .qr-trigger-btn svg {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
   }
 
   /* RIGHT PANEL: Bio, Services, Actions Grid */
   .card-right-panel {
-    width: 60%;
-    padding: 22px 26px;
+    flex: 1;
+    height: 100%;
+    padding: clamp(24px, 3.5vh, 44px) clamp(28px, 3.5vw, 50px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: var(--bg-card);
-    transform-style: preserve-3d;
+    overflow: hidden;
+    position: relative;
   }
 
   .right-header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 10px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--border-subtle);
   }
 
   .company-wordmark {
-    height: 18px;
+    height: 22px;
     width: auto;
     object-fit: contain;
   }
@@ -469,14 +450,13 @@ body {
   .social-inline-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
+    gap: 10px;
+    margin-right: 48px; /* Offset for floating theme button */
   }
 
   .social-circle-link {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
@@ -492,67 +472,75 @@ body {
     background: var(--brand-primary);
     color: #ffffff;
     border-color: var(--brand-primary);
-    transform: translateY(-2px) scale(1.08);
+    transform: translateY(-2px);
   }
 
   .social-circle-link svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   /* About & Services */
   .panel-bio-block {
-    margin: 8px 0;
+    margin: 12px 0;
   }
 
   .section-label {
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.9px;
     color: var(--text-muted);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
   .bio-paragraph {
-    font-size: 12.5px;
-    line-height: 1.5;
+    font-size: clamp(13.5px, 1.1vw, 15px);
+    line-height: 1.65;
     color: var(--text-secondary);
+    max-width: 860px;
   }
 
   .services-chip-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 6px;
+    gap: 7px;
+    margin-top: 10px;
   }
 
   .service-tag {
-    font-size: 10.5px;
+    font-size: 11.5px;
     font-weight: 500;
     color: var(--text-secondary);
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    padding: 3px 8px;
+    padding: 4px 11px;
     border-radius: var(--radius-pill);
+    transition: all var(--transition);
+  }
+
+  .service-tag:hover {
+    border-color: var(--border-active);
+    color: var(--text-primary);
   }
 
   /* Actions 2-Column Grid */
   .actions-grid-box {
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .action-cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 10px;
+    max-width: 900px;
   }
 
   .action-grid-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 11px 14px;
     background: var(--bg-card-subtle);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
@@ -561,7 +549,6 @@ body {
     text-decoration: none;
     color: inherit;
     min-width: 0;
-    transform-style: preserve-3d;
   }
 
   .action-grid-card:hover {
@@ -573,14 +560,14 @@ body {
   .action-card-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
   }
 
   .action-icon-disc {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
     border-radius: 50%;
     background: var(--brand-primary);
     color: #ffffff;
@@ -591,8 +578,8 @@ body {
   }
 
   .action-icon-disc svg {
-    width: 15px;
-    height: 15px;
+    width: 17px;
+    height: 17px;
   }
 
   .action-text-col {
@@ -602,7 +589,7 @@ body {
   }
 
   .action-head-text {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
@@ -611,7 +598,7 @@ body {
   }
 
   .action-desc-text {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
@@ -629,7 +616,7 @@ body {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    padding: 4px;
+    padding: 5px;
     border-radius: 4px;
     cursor: pointer;
     display: flex;
@@ -644,8 +631,8 @@ body {
   }
 
   .mini-copy-btn svg {
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
   }
 
   /* Mobile bottom action bar hidden on desktop */
@@ -655,34 +642,41 @@ body {
 }
 
 /* ==========================================================================
-   MOBILE DEVICES: VERTICAL CARD LAYOUT (NO SCROLL)
+   MOBILE DEVICES: FULL SCREEN VERTICAL CARD (ZERO SCROLL)
    ========================================================================== */
 @media (max-width: 899px) {
   body {
-    padding: 8px;
-    justify-content: center;
+    padding: 6px;
+    margin: 0;
+    width: 100vw;
+    height: 100dvh;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .parent {
-    perspective: none;
-    max-width: 390px;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
   }
 
   .top-bar-minimal {
-    top: 8px;
+    top: 10px;
     right: 12px;
   }
 
   .card-master-wrapper {
-    max-width: 390px;
-    height: 94vh;
-    max-height: 780px;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 18px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     flex-direction: column;
     justify-content: space-between;
-  }
-
-  .logo, .glass {
-    display: none; /* Keep mobile clean and uncluttered */
   }
 
   /* TOP SPLIT HEADER */
@@ -690,17 +684,18 @@ body {
     width: 100%;
     background: var(--brand-gradient-alt);
     color: #ffffff;
-    padding: 16px 16px 14px;
+    padding: 14px 18px 12px;
     position: relative;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    flex-shrink: 0;
   }
 
   .left-top-brand {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
-    padding-left: 0;
+    margin-bottom: 8px;
+    padding-right: 36px; /* Offset for theme toggle */
     min-height: auto;
   }
 
@@ -753,7 +748,7 @@ body {
   }
 
   .employee-name {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.15;
@@ -761,7 +756,7 @@ body {
   }
 
   .employee-role {
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text-blue);
     margin-bottom: 2px;
@@ -774,9 +769,9 @@ body {
 
   .dp-outer-wrapper {
     position: relative;
-    width: 82px;
-    height: 82px;
-    min-width: 82px;
+    width: 76px;
+    height: 76px;
+    min-width: 76px;
     border-radius: 50%;
     padding: 2.5px;
     background: linear-gradient(135deg, #00d2ff 0%, #0080ff 50%, #ffffff 100%);
@@ -809,7 +804,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 8px;
+    margin-top: 6px;
   }
 
   .meta-tag {
@@ -840,15 +835,16 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 12px 14px 14px;
+    padding: 10px 16px 12px;
     overflow: hidden;
+    background: var(--bg-card);
   }
 
   .right-header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 6px;
+    padding-bottom: 5px;
   }
 
   .company-wordmark {
@@ -879,11 +875,11 @@ body {
   }
 
   .panel-bio-block {
-    margin: 4px 0;
+    margin: 3px 0;
   }
 
   .section-label {
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -892,7 +888,7 @@ body {
 
   .bio-paragraph {
     font-size: 11px;
-    line-height: 1.4;
+    line-height: 1.35;
     color: var(--text-secondary);
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -904,11 +900,11 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
   .service-tag {
-    font-size: 9.5px;
+    font-size: 9px;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
@@ -917,20 +913,20 @@ body {
   }
 
   .actions-grid-box {
-    margin: 6px 0;
+    margin: 4px 0;
   }
 
   .action-cards-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 4px;
   }
 
   .action-grid-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 8px;
+    padding: 5px 8px;
     background: var(--bg-card-subtle);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
@@ -947,9 +943,9 @@ body {
   }
 
   .action-icon-disc {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
     border-radius: 50%;
     background: var(--brand-primary);
     color: #ffffff;
@@ -959,8 +955,8 @@ body {
   }
 
   .action-icon-disc svg {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   .action-text-col {
@@ -970,7 +966,7 @@ body {
   }
 
   .action-head-text {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
@@ -979,7 +975,7 @@ body {
   }
 
   .action-desc-text {
-    font-size: 9.5px;
+    font-size: 9px;
     color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
@@ -996,13 +992,13 @@ body {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    padding: 4px;
+    padding: 3px;
     cursor: pointer;
   }
 
   .mini-copy-btn svg {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
   }
 
   /* Mobile Bottom Bar */
@@ -1012,6 +1008,7 @@ body {
     gap: 6px;
     padding-top: 6px;
     border-top: 1px solid var(--border-subtle);
+    flex-shrink: 0;
   }
 
   .mobile-bottom-bar .save-vcard-btn {
@@ -1024,21 +1021,21 @@ body {
     color: #ffffff;
     border: none;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
-    padding: 9px 12px;
+    padding: 8px 12px;
     border-radius: var(--radius-pill);
     cursor: pointer;
   }
 
   .mobile-bottom-bar .save-vcard-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
   }
 
   .mobile-bottom-bar .qr-trigger-btn {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
@@ -1050,8 +1047,8 @@ body {
   }
 
   .mobile-bottom-bar .qr-trigger-btn svg {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
   }
 }
 

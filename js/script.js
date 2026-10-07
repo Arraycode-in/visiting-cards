@@ -420,66 +420,6 @@ function setupHandlers() {
       }
     });
   }
-
-  // High-Performance Smooth Lerp + requestAnimationFrame (Option B - 60/120fps)
-  const cardParent = document.getElementById('card-3d-parent');
-  const cardEl = document.getElementById('card-master');
-  if (cardParent && cardEl) {
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let rafId = null;
-    let isHovering = false;
-
-    const lerp = (start, end, factor) => start + (end - start) * factor;
-
-    function updateCardTilt() {
-      // Silky-smooth linear interpolation with inertia damping
-      currentX = lerp(currentX, targetX, 0.08);
-      currentY = lerp(currentY, targetY, 0.08);
-
-      cardEl.style.transform = `rotateX(${currentY.toFixed(3)}deg) rotateY(${currentX.toFixed(3)}deg)`;
-
-      const diffX = Math.abs(targetX - currentX);
-      const diffY = Math.abs(targetY - currentY);
-
-      // Keep running while hovering or until fully settled at rest
-      if (isHovering || diffX > 0.005 || diffY > 0.005) {
-        rafId = requestAnimationFrame(updateCardTilt);
-      } else {
-        cardEl.style.transform = isHovering ? `rotateX(${targetY}deg) rotateY(${targetX}deg)` : '';
-        rafId = null;
-      }
-    }
-
-    cardParent.addEventListener('mouseenter', () => {
-      if (window.innerWidth < 900) return;
-      isHovering = true;
-      if (!rafId) rafId = requestAnimationFrame(updateCardTilt);
-    });
-
-    cardParent.addEventListener('mousemove', (e) => {
-      if (window.innerWidth < 900) return;
-      isHovering = true;
-      const rect = cardParent.getBoundingClientRect();
-      const normX = (e.clientX - rect.left) / rect.width;
-      const normY = (e.clientY - rect.top) / rect.height;
-
-      // Silky, balanced tilt range (-8deg to +8deg)
-      targetX = (normX - 0.5) * 16;
-      targetY = (normY - 0.5) * -16;
-
-      if (!rafId) rafId = requestAnimationFrame(updateCardTilt);
-    });
-
-    cardParent.addEventListener('mouseleave', () => {
-      if (window.innerWidth < 900) return;
-      isHovering = false;
-      targetX = 0;
-      targetY = 0;
-      if (!rafId) rafId = requestAnimationFrame(updateCardTilt);
-    });
-  }
 }
+
 
