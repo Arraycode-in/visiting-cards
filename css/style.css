@@ -15,7 +15,65 @@
   --brand-gradient: linear-gradient(135deg, #0099ff 0%, #2563eb 55%, #4f46e5 100%);
   --brand-gradient-alt: linear-gradient(145deg, #0a1738 0%, #004c99 50%, #0080ff 100%);
 
-  /* Dark Theme (Default) */
+  /* Light Theme (Default) */
+  --bg-page: #f8fafc;
+  --bg-page-mesh: radial-gradient(circle at 50% 10%, rgba(0, 128, 255, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 85% 75%, rgba(79, 70, 229, 0.05) 0%, transparent 50%),
+                  #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f8fafc;
+  --bg-surface: #f1f5f9;
+  --bg-surface-hover: #e2e8f0;
+  --border-subtle: rgba(15, 23, 42, 0.09);
+  --border-active: rgba(0, 128, 255, 0.4);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-blue: #0284c7;
+
+  --badge-bg: rgba(0, 128, 255, 0.08);
+  --badge-text: #0284c7;
+  --badge-border: rgba(0, 128, 255, 0.2);
+
+  --shadow-card: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  --shadow-btn: 0 8px 20px -4px rgba(0, 128, 255, 0.35);
+  --shadow-dp: 0 10px 28px -6px rgba(0, 0, 0, 0.5);
+
+  --radius-card: 26px;
+  --radius-md: 12px;
+  --radius-pill: 9999px;
+
+  --transition: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Explicit Light Theme */
+[data-theme="light"] {
+  --bg-page: #f8fafc;
+  --bg-page-mesh: radial-gradient(circle at 50% 10%, rgba(0, 128, 255, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 85% 75%, rgba(79, 70, 229, 0.05) 0%, transparent 50%),
+                  #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f8fafc;
+  --bg-surface: #f1f5f9;
+  --bg-surface-hover: #e2e8f0;
+  --border-subtle: rgba(15, 23, 42, 0.09);
+  --border-active: rgba(0, 128, 255, 0.4);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-blue: #0284c7;
+
+  --badge-bg: rgba(0, 128, 255, 0.08);
+  --badge-text: #0284c7;
+  --badge-border: rgba(0, 128, 255, 0.2);
+
+  --shadow-card: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+/* Dark Theme (Toggle Mode) */
+[data-theme="dark"] {
   --bg-page: #070b16;
   --bg-page-mesh: radial-gradient(circle at 50% 10%, rgba(0, 128, 255, 0.16) 0%, transparent 60%),
                   radial-gradient(circle at 85% 75%, rgba(79, 70, 229, 0.12) 0%, transparent 50%),
@@ -37,39 +95,6 @@
   --badge-border: rgba(0, 140, 255, 0.25);
 
   --shadow-card: 0 24px 64px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-btn: 0 8px 20px -4px rgba(0, 128, 255, 0.45);
-  --shadow-dp: 0 10px 28px -6px rgba(0, 0, 0, 0.6);
-
-  --radius-card: 26px;
-  --radius-md: 12px;
-  --radius-pill: 9999px;
-
-  --transition: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Light Theme */
-[data-theme="light"] {
-  --bg-page: #f1f5f9;
-  --bg-page-mesh: radial-gradient(circle at 50% 10%, rgba(0, 128, 255, 0.1) 0%, transparent 60%),
-                  radial-gradient(circle at 85% 75%, rgba(79, 70, 229, 0.06) 0%, transparent 50%),
-                  #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-card-subtle: #f8fafc;
-  --bg-surface: #f1f5f9;
-  --bg-surface-hover: #e2e8f0;
-  --border-subtle: rgba(15, 23, 42, 0.09);
-  --border-active: rgba(0, 128, 255, 0.4);
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --text-blue: #0284c7;
-
-  --badge-bg: rgba(0, 128, 255, 0.08);
-  --badge-text: #0284c7;
-  --badge-border: rgba(0, 128, 255, 0.2);
-
-  --shadow-card: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.06);
 }
 
 /* Base Reset */

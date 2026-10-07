@@ -33,7 +33,7 @@
   },
   "theme": {
     "style": "split",
-    "mode": "dark",
+    "mode": "light",
     "primaryColor": "#0080ff",
     "secondaryColor": "#4f46e5",
     "accentColor": "#00d2ff"
